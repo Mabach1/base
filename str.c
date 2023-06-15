@@ -453,3 +453,13 @@ void stringvec_print(const StringVec str_vec) {
         string_print(str_vec.str[i]);
     }
 }
+
+StringArr string_from_args(Arena *arena, u32 argc, char **argv) {
+    StringArr arr = stringarr_alloc(arena, sizeof(String) * argc);
+
+    for (u32 i = 0; i < argc; ++i) {
+        stringarr_push(&arr, string_str_lit(argv[i]));
+    }
+
+    return arr;
+}

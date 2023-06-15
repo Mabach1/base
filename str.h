@@ -20,6 +20,7 @@ typedef struct StringArr {
 /* string */
 String string_from(Arena *arena, const u8 *content);
 String string_from_stdin(Arena *arena);
+StringArr string_from_args(Arena *arena, u32 argc, char **argv);
 String string_str_lit(const u8 *lit);
 
 void string_print(const String str);
