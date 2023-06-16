@@ -463,3 +463,7 @@ StringArr string_from_args(Arena *arena, u32 argc, char **argv) {
 
     return arr;
 }
+
+bool string_contains(const String haystack, const String needle) {
+    return string_find_first(haystack, needle, 0) != 0;
+}

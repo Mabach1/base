@@ -30,6 +30,7 @@ i8 string_compare(const String str1, const String str2);
 bool string_equal(const String str1, const String str2);
 bool string_is_null(const String str);
 
+bool string_contains(const String haystack, const String needle);
 usize string_find_first(const String haystack, const String needle, u32 offset);
 usize string_find_last(const String haystack, const String needle, u32 offset);
 u64 string_substr_count(const String haystack, const String needle);
