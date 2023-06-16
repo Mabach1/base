@@ -17,7 +17,7 @@ String string_alloc(Arena *arena, usize size) {
     return str;
 }
 
-String string_from(Arena *arena, const u8 *content) {
+String string_from(Arena *arena, const char *content) {
     String str = string_alloc(arena, strlen(content));
 
     memcpy(str.data, content, strlen(content));
@@ -34,7 +34,7 @@ String string_from_stdin(Arena *arena) {
 
     String input = string_alloc(&scratch, STRING_DEFAULT_SIZE);
     
-    u8 stdin_chr = 0;
+    char stdin_chr = 0;
     usize cap = input.len;
 
     while (stdin_chr != '\n') {
@@ -44,7 +44,7 @@ String string_from_stdin(Arena *arena) {
 
         if (input.len >= cap) {
             cap *= 2;
-            arena_resize(&scratch, input.data, cap * sizeof(u8)); 
+            arena_resize(&scratch, input.data, cap * sizeof(char)); 
         }
 
     }
@@ -65,7 +65,7 @@ String string_from_stdin(Arena *arena) {
 }
 
 void string_print(const String str) {
-    fwrite(str.data, sizeof(u8), str.len, stdout);
+    fwrite(str.data, sizeof(char), str.len, stdout);
 }
 
 void string_log(const String str) {
@@ -88,7 +88,7 @@ void stringarr_log(StringArr list) {
     }
 }
 
-StringArr string_parse(Arena *arena, String *str, const u8 *delimiters) {
+StringArr string_parse(Arena *arena, String *str, const char *delimiters) {
     Arena scratch;
 
     arena_init(&scratch);
@@ -166,8 +166,8 @@ void stringarr_push_multiple(StringArr *arr, u64 number_of_strings, ...) {
 
     usize old_len = arr->len;
 
-    for (arr->len; arr->len < arr->cap && arr->len < number_of_strings + old_len; ++arr->len) {
-        u8 *arg = va_arg(args, u8*); 
+    for (; arr->len < arr->cap && arr->len < number_of_strings + old_len; ++arr->len) {
+        char *arg = va_arg(args, char*); 
         arr->arr[arr->len].data = strdup(arg);
         arr->arr[arr->len].len = strlen(arg);
     }
@@ -264,9 +264,9 @@ String string_copy(Arena *arena, const String source, usize destination_size) {
     return result;
 }
 
-String string_str_lit(const u8 *lit) {
+String string_str_lit(const char *lit) {
     return (String) { 
-        .data = (u8 *)lit, 
+        .data = (char *)lit, 
         .len = strlen((const char *)lit) 
     };
 }
@@ -280,7 +280,7 @@ usize string_find_first(const String haystack, const String needle, u32 offset) 
         return haystack.len + 1;
     }
 
-    const u8 *search_start = haystack.data + offset;
+    const char *search_start = haystack.data + offset;
     usize remaining_length = haystack.len - offset;
 
     for (usize i = 0; i <= remaining_length - needle.len; ++i) {

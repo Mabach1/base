@@ -7,7 +7,7 @@
 #define STRING_DEFAULT_SIZE (32)
 
 typedef struct String {
-    u8 *data;
+    char *data;
     usize len;  
 } String;
 
@@ -18,10 +18,10 @@ typedef struct StringArr {
 } StringArr;
 
 /* string */
-String string_from(Arena *arena, const u8 *content);
+String string_from(Arena *arena, const char *content);
 String string_from_stdin(Arena *arena);
 StringArr string_from_args(Arena *arena, u32 argc, char **argv);
-String string_str_lit(const u8 *lit);
+String string_str_lit(const char *lit);
 
 void string_print(const String str);
 const char *string_get_lit(const String str);
@@ -38,7 +38,7 @@ String string_replace_all(Arena *arena, const String to_fix, const String needle
 String string_cat(Arena *arena, const String str1, const String str2);
 String string_copy(Arena *arena, const String source, usize destination_size);
 String string_dup(Arena *arena, const String source);
-StringArr string_parse(Arena *arena, String *str, const u8 *delimiters);
+StringArr string_parse(Arena *arena, String *str, const char *delimiters);
 
 /* string array */
 StringArr stringarr_alloc(Arena *arena, usize size);
