@@ -25,10 +25,44 @@ typedef float                         f32;
 typedef double                        f64;
 typedef long double                  f128;
                                     
-typedef size_t                      usize;
-typedef ssize_t                     isize;
+/* my compiler specific without using libc */
+typedef long long                   isize;
+typedef unsigned long long          usize;
 
-#define USIZE_MAX    0xffffffffffffffffULL 
+/* bounds of respective data types */
+#define U8_MAX              0xFF
+#define U16_MAX             0xFFFF
+#define U32_MAX             0xFFFFFFFF
+#define U64_MAX             0xFFFFFFFFFFFFFFFFULL
+
+#define S8_MAX              0x7F
+#define S8_MIN              (-S8_MAX - 1)
+#define S16_MAX             0x7FFF
+#define S16_MIN             (-S16_MAX - 1)
+#define S32_MAX             0x7FFFFFFF
+#define S32_MIN             (-S32_MAX - 1)
+#define S64_MAX             0x7FFFFFFFFFFFFFFFLL
+#define S64_MIN             (-S64_MAX - 1)
+
+#define I8_MAX              S8_MAX
+#define I8_MIN              S8_MIN
+#define I16_MAX             S16_MAX
+#define I16_MIN             S16_MIN
+#define I32_MAX             S32_MAX
+#define I32_MIN             S32_MIN
+#define I64_MAX             S64_MAX
+#define I64_MIN             S64_MIN
+
+#define F32_MAX             3.402823466e+38F
+#define F32_MIN             (-F32_MAX)
+#define F64_MAX             1.7976931348623157e+308
+#define F64_MIN             (-F64_MAX)
+#define F128_MAX            1.18973149535723176502e+4932L
+#define F128_MIN            (-F128_MAX)
+
+#define USIZE_MAX           0xFFFFFFFFFFFFFFFFULL
+#define ISIZE_MAX           S64_MAX
+#define ISIZE_MIN           S64_MIN
 
 /* boolean */
 typedef enum { false, true } bool;
