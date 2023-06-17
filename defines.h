@@ -24,10 +24,13 @@ typedef long long                     i64;
 typedef float                         f32;
 typedef double                        f64;
 typedef long double                  f128;
-                                    
+
 /* my compiler specific without using libc */
 typedef long long                   isize;
 typedef unsigned long long          usize;
+
+/* special types */
+typedef u8                          byte;
 
 /* bounds of respective data types */
 #define U8_MAX              0xFF
@@ -72,6 +75,5 @@ typedef enum { false, true } bool;
 #define KiloBytes(x) ((u64) x * 1024) 
 #define MegaBytes(x) ((u64) x * 1024 * 1024) 
 #define GigaBytes(x) ((u64) x * 1024 * 1024 * 1024)
-
 
 #endif
