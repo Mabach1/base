@@ -30,6 +30,7 @@ const char *string_get_lit(const String str);
 
 i8 string_compare(const String str1, const String str2);
 bool string_equal(const String str1, const String str2);
+bool string_equal_n(const String str1, const String str2, usize n);
 bool string_is_null(const String str);
 
 bool string_contains(const String haystack, const String needle);

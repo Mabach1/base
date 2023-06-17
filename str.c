@@ -200,6 +200,10 @@ bool string_equal(const String str1, const String str2) {
     return 0 == memcmp(str1.data, str2.data, str1.len);
 }
 
+bool string_equal_n(const String str1, const String str2, usize n) {
+    return 0 == memcmp(str1.data, str2.data, n);
+}
+
 i8 string_compare(const String str1, const String str2) {
     i8 flag = 0;
 
