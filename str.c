@@ -134,7 +134,6 @@ StringArr string_parse(Arena *arena, String *str, const char *delimiters) {
         offset++;
     }
 
-
     /* if the last string isnt delimiter, we also assign it */
     if (current_str_len > 0) {
         list.arr[list.len].data = str->data + offset - current_str_len;
