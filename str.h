@@ -17,6 +17,8 @@ typedef struct StringArr {
     usize cap;
 } StringArr;
 
+#define NULL_STR (String) { .data = "", .len = 0 }
+
 /* string */
 String string_from(Arena *arena, const char *content);
 String string_from_stdin(Arena *arena);
