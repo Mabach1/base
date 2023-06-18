@@ -28,6 +28,8 @@ String string_str_lit(const char *lit);
 void string_print(const String str);
 const char *string_get_lit(const String str);
 
+i64 string_stoi(const String str);
+
 i8 string_compare(const String str1, const String str2);
 bool string_equal(const String str1, const String str2);
 bool string_equal_n(const String str1, const String str2, usize n);

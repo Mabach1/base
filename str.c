@@ -470,3 +470,33 @@ StringArr string_from_args(Arena *arena, u32 argc, char **argv) {
 bool string_contains(const String haystack, const String needle) {
     return string_find_first(haystack, needle, 0) != 0;
 }
+
+const char *string_get_lit(const String str) {
+    char *lit = str.data;
+    lit[str.len] = '\0';
+
+    return lit;
+}
+
+i64 string_stoi(const String str) {
+    i8 sign = 1;
+    i64 result = 0;
+
+    usize i = 0;
+
+    while (i < str.len && (str.data[i] == ' ' || str.data[i] == '\t')) {
+        ++i;
+    }
+
+    if (i < str.len && (str.data[i] == '-' || str.data[i] == '+')) {
+        sign = (str.data[i] == '-') ? -1 : 1;
+        ++i;
+    }
+
+    while (i < str.len && str.data[i] >= '0' && str.data[i] <= '9') {
+        result = (result * 10) + (str.data[i] - '0');
+        ++i;
+    }
+
+    return sign * result;
+}
