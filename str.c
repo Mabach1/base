@@ -35,7 +35,7 @@ String string_from_stdin(Arena *arena) {
     String input = string_alloc(&scratch, STRING_DEFAULT_SIZE);
     
     char stdin_chr = 0;
-    usize cap = input.len;
+    usize cap = STRING_DEFAULT_SIZE;
 
     while (stdin_chr != '\n') {
         stdin_chr = getchar();
@@ -70,7 +70,7 @@ void string_print(const String str) {
 
 void string_log(const String str) {
      for (usize i = 0; i < str.len; ++i) {
-        fprintf(stdout, " [%c] ", str.data[i]);
+        fprintf(stdout, " '%c' ", str.data[i]);
     }
 }
 
