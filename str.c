@@ -500,3 +500,14 @@ i64 string_stoi(const String str) {
 
     return sign * result;
 }
+
+void string_trim(String *str) {
+    if (isspace(str->data[0])) {
+        str->data = &str->data[1];
+        str->len--;
+    }
+
+    if (isspace(str->data[str->len])) {
+        str->data[str->len--] = '\0';
+    }
+}
