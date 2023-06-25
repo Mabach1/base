@@ -19,6 +19,10 @@ typedef struct StringArr {
 
 #define NULL_STR (String) { .data = "", .len = 0 }
 
+#ifdef STR_DEVELOPING
+    String string_alloc(Arena *arena, usize size);
+#endif
+
 /* string */
 String string_from(Arena *arena, const char *content);
 String string_from_stdin(Arena *arena);
@@ -55,7 +59,7 @@ void stringarr_push_multiple(StringArr *arr, u64 number_of_strings, ...);
 
 void stringarr_print(const StringArr list);
 
-#ifdef STRING_DEBUG
+#ifdef STR_DEBUG
 
 void string_log(const String str);
 void stringarr_log(StringArr list);
