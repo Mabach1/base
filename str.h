@@ -27,6 +27,8 @@ typedef struct StringArr {
 String string_from(Arena *arena, const char *content);
 String string_from_stdin(Arena *arena);
 StringArr string_from_args(Arena *arena, u32 argc, char **argv);
+StringArr stringarr_from_file(Arena *arena, const char *filename);
+
 String string_str_lit(const char *lit);
 
 void string_print(const String str);

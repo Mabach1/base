@@ -511,3 +511,55 @@ void string_trim(String *str) {
         str->data[str->len--] = '\0';
     }
 }
+
+StringArr stringarr_from_file(Arena *arena, const char *filename) {
+    FILE *file = 0; /* just initialization, there is no other reason for the 0 */
+
+    if (fopen_s(&file, filename, "r")) {
+        /* if the opening of the file fails, we return an empty array */
+        return (StringArr) { .arr = NULL, .len = 0, .cap = 0 };
+    }
+
+    char chr;   /* a single character from the given file */
+
+    Arena scratch;
+
+    arena_init(&scratch);
+
+    StringArr result = stringarr_alloc(arena, count_lines(filename));
+
+    if (0 == result.cap) {
+        return (StringArr) { .arr = NULL, .len = 0, .cap = 0 };
+    }
+
+    String row = string_alloc(&scratch, STRING_DEFAULT_SIZE);
+    usize cap = STRING_DEFAULT_SIZE;
+
+    while (fscanf(file, "%c", &chr) != EOF) {
+        if ('\n' == chr) {
+            String line = string_copy(arena, row, row.len);
+            
+            string_trim(&line);  
+
+            stringarr_push(&result, line);
+            
+            row.len = 0;
+        }
+
+        row.data[row.len++] = chr;
+
+        if (row.len >= cap) {
+            cap *= 2;
+            arena_resize(&scratch, row.data, cap * sizeof(char)); /* technically speaking, the sizeof(char) is unnecessary but it is there for clarity */
+        }
+    }
+
+    /* the last trailing string */
+    stringarr_push(&result, string_copy(arena, row, row.len));
+
+    arena_deinit(&scratch);
+
+    fclose(file);
+    
+    return result;
+}
