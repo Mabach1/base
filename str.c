@@ -5,6 +5,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdarg.h>
+#include <ctype.h>
 
 String string_alloc(Arena *arena, usize size) {
     String str;
@@ -457,7 +458,7 @@ void stringvec_print(const StringVec str_vec) {
     }
 }
 
-StringArr string_from_args(Arena *arena, u32 argc, char **argv) {
+StringArr stringarr_from_args(Arena *arena, u32 argc, char **argv) {
     StringArr arr = stringarr_alloc(arena, sizeof(String) * argc);
 
     for (u32 i = 0; i < argc; ++i) {
@@ -499,6 +500,42 @@ i64 string_stoi(const String str) {
     }
 
     return sign * result;
+}
+
+#define BUF_SIZE 65536
+
+usize count_lines(const char *filename) {
+    FILE *file = 0;
+
+    if (fopen_s(&file, filename, "rb")) {
+        return 0;
+    }
+
+    char buffer[BUF_SIZE];
+
+    usize counter = 0;
+
+    while (true) {
+        usize result = fread(buffer, sizeof(char), BUF_SIZE, file);
+
+        if (ferror(file)) {
+            return 0;
+        }
+
+        for (usize i = 0; i < result; ++i) {
+            if ('\n' == buffer[i]) {
+                ++counter;
+            }
+        }
+
+        if (feof(file)) {
+            break;
+        }
+    }
+
+    fclose(file);
+
+    return counter;
 }
 
 void string_trim(String *str) {
