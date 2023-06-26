@@ -3,8 +3,6 @@
 
 #include <stdio.h>
 
-#define table_len(table) sizeof (table) / sizeof (*table)
-
 /* types */
 typedef unsigned char                  u8;
 typedef unsigned short                u16;
@@ -75,5 +73,8 @@ typedef enum { false, true } bool;
 #define KiloBytes(x) ((u64) x * 1024) 
 #define MegaBytes(x) ((u64) x * 1024 * 1024) 
 #define GigaBytes(x) ((u64) x * 1024 * 1024 * 1024)
+
+#define table_len(table) sizeof (table) / sizeof (*table)
+#define ERROR_LOG fprintf(stderr, "hello from the line %llu", __LINE__);
 
 #endif
