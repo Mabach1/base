@@ -9,6 +9,8 @@ i32 main(void) {
 
     string_print(str);
 
+    fprintf(stdout, "Here is the random number of the day: %llu", ran_rand());
+
     arena_deinit(&arena);
 
     return 0;
