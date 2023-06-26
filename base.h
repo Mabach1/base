@@ -4,5 +4,6 @@
 #include "defines.h"
 #include "mem.h"
 #include "str.h"
+#include "ran.h"
 
 #endif
