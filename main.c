@@ -1,15 +1,47 @@
 #include "base/base.h"
 
+#include <stdarg.h>
+#include <string.h>
+
+void string_print_format(const char *__format__, ...) {
+    u64 num_string = 0;
+
+    for (usize i = 0; i < strlen(__format__); ++i) {
+        if ('%' == __format__[i]) {
+            ++num_string;
+        }
+    }
+
+    va_list args;
+
+    va_start(args, __format__);
+
+    Arena scratch;
+
+    arena_init(&scratch);
+
+    StringArr strings = stringarr_alloc(&scratch, num_string);
+
+    for (u64 i = 0; i < num_string; ++i) {
+        stringarr_push(&strings, (String)va_arg(args, String));
+    }
+
+    va_end(args);
+
+    stringarr_print(strings);
+
+    arena_deinit(&scratch);
+}
+
 i32 main(void) {
     Arena arena;
 
     arena_init(&arena);
 
-    String str = string_from(&arena, "Hello mom, how are you? :)");
+    String name = string_from(&arena, "maminka");
+    String admin = string_from(&arena, "authentificated user");
 
-    string_print(str);
-
-    fprintf(stdout, "Here is the random number of the day: %llu", ran_rand());
+    string_print_format("ahoj %, ja se jmenuju %", name, admin);
 
     arena_deinit(&arena);
 
