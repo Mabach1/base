@@ -1,7 +1,5 @@
-test.c
-a.exe
-built.bat
-main.exe
-text.txt
-main.c
-main.o
+*.o
+*.exe
+
+*.bat
+
