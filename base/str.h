@@ -23,16 +23,18 @@ typedef struct StringArr {
     String string_alloc(Arena *arena, usize size);
 #endif
 
-/* string */
+/* creating strings */
 String string_from(Arena *arena, const char *content);
 String string_from_stdin(Arena *arena);
 StringArr stringarr_from_args(Arena *arena, u32 argc, char **argv);
 StringArr stringarr_from_file(Arena *arena, const char *filename);
+String stirng_from_format(Arena *arena, const char *__format__, ...);
 
 String string_str_lit(const char *lit);
+const char *string_get_lit(const String str);
 
 void string_print(const String str);
-const char *string_get_lit(const String str);
+void string_print_format(const char *__format__, ...);
 
 i64 string_stoi(const String str);
 void string_trim(String *str);
