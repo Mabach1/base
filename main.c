@@ -1,14 +1,15 @@
+#define STR_DEBUG
+
 #include "base/base.h"
 
-
-i32 main(void) {
-    Arena arena;
+i32 main(i32 argc, char **argv) {
+    Arena arena;    
 
     arena_init(&arena);
 
-    String str = stirng_from_format(&arena, "Hello mom, random number of the day is: %d", 5);
+    const StringArr args = stringarr_from_args(&arena, argc, argv);
 
-    string_print(str);
+    string_print_format("File name: %", args.arr[0]);
 
     arena_deinit(&arena);
 
