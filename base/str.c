@@ -473,19 +473,11 @@ bool string_contains(const String haystack, const String needle) {
 }
 
 const char *string_get_lit(const String str) {
-#if 1
-    
-    char *lit = str.data;
-    lit[str.len] = '\0';
-
-    return lit;
-#else
-    char *lit_result = srtdup(str.data);
+    char *lit_result = strdup(str.data);
 
     lit_result[str.len] = '\0';
 
     return lit_result;
-#endif
 }
 
 i64 string_stoi(const String str) {
