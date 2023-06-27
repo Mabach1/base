@@ -9,7 +9,7 @@ i32 main(i32 argc, char **argv) {
 
     const StringArr args = stringarr_from_args(&arena, argc, argv);
 
-    string_print_format("File name: %", args.arr[0]);
+    string_print_format("This file: % is now part of the 'develop' branch", args.arr[0]);
 
     arena_deinit(&arena);
 
