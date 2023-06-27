@@ -12,6 +12,7 @@ void string_print_format(const char *__format__, ...) {
         }
     }
 
+    /* grabing the strings and puting them in string array */
     va_list args;
 
     va_start(args, __format__);
@@ -28,7 +29,15 @@ void string_print_format(const char *__format__, ...) {
 
     va_end(args);
 
-    stringarr_print(strings);
+
+    for (usize i = 0, j = 0; i < strlen(__format__); ++i) {
+        if ('%' == __format__[i]) {
+            string_print(strings.arr[j++]);
+            continue;
+        }
+
+        fprintf(stdout, "%c", __format__[i]);
+    }
 
     arena_deinit(&scratch);
 }
