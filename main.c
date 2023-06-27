@@ -1,5 +1,3 @@
-#define STR_DEBUG
-
 #include "base/base.h"
 
 i32 main(i32 argc, char **argv) {
