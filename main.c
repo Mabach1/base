@@ -1,3 +1,5 @@
+#define STR_DEVELOPING
+
 #include "base/base.h"
 
 #include <stdarg.h>
@@ -42,15 +44,29 @@ void string_print_format(const char *__format__, ...) {
     arena_deinit(&scratch);
 }
 
+String stirng_from_format(Arena *arena, const char *__format__, ...) {
+    va_list args;
+
+    va_start(args, __format__);
+
+    char buf[8092];
+    vsnprintf(buf, 8092, __format__, args);
+
+    va_end(args);
+
+    String result = string_from(arena, buf);
+    
+    return result;
+}
+
 i32 main(void) {
     Arena arena;
 
     arena_init(&arena);
 
-    String name = string_from(&arena, "maminka");
-    String admin = string_from(&arena, "authentificated user");
+    String str = stirng_from_format(&arena, "Hello mom, random number of the day is: %d", 5);
 
-    string_print_format("ahoj %, ja se jmenuju %", name, admin);
+    string_print(str);
 
     arena_deinit(&arena);
 
