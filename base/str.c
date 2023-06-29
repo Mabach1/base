@@ -603,13 +603,7 @@ StringArr stringarr_from_file(Arena *arena, const char *filename) {
 }
 
 void string_print_format(const char *__format__, ...) {
-    u64 num_string = 0;
-
-    for (usize i = 0; i < strlen(__format__); ++i) {
-        if ('%' == __format__[i]) {
-            ++num_string;
-        }
-    }
+    u64 num_string = string_substr_count(string_str_lit(__format__), string_str_lit("{}")) - 1;
 
     /* grabing the strings and puting them in string array */
     va_list args;
@@ -628,10 +622,11 @@ void string_print_format(const char *__format__, ...) {
 
     va_end(args);
 
-
     for (usize i = 0, j = 0; i < strlen(__format__); ++i) {
-        if ('%' == __format__[i]) {
+        
+        if ('{' == __format__[i]) {
             string_print(strings.arr[j++]);
+            ++i;
             continue;
         }
 
