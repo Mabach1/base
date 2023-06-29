@@ -2,6 +2,7 @@
 #define __DEFINES_H__
 
 #include <stdio.h>
+#include <stdlib.h>
 
 /* types */
 typedef unsigned char                  u8;
@@ -75,6 +76,15 @@ typedef enum { false, true } bool;
 #define GigaBytes(x) ((u64) x * 1024 * 1024 * 1024)
 
 #define table_len(table) sizeof (table) / sizeof (*table)
-#define ERROR_LOG fprintf(stderr, "hello from the line %llu", __LINE__);
+#define LOG(msg) fprintf(stderr, "[%s]:[%llu] [%s]\n", __FILE__, __LINE__, msg);
+#define LOG_VAL(__format, ...)                                              \
+    do {                                                                    \
+        char __buffer[8092];                                                \
+        snprintf(__buffer, sizeof(__buffer), __format, __VA_ARGS__);        \
+        fprintf(stderr, "%s", __buffer);                                    \
+    } while (0)
+
+
+#define ASSERT(_e, ...) if (!(_e)) { fprintf(stderr,  __VA_ARGS__); exit(1); }
 
 #endif
