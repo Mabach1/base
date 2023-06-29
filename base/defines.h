@@ -81,7 +81,7 @@ typedef enum { false, true } bool;
     do {                                                                    \
         char __buffer[8092];                                                \
         snprintf(__buffer, sizeof(__buffer), __format, __VA_ARGS__);        \
-        fprintf(stderr, "%s", __buffer);                                    \
+        LOG(__buffer)                                                       \
     } while (0)
 
 
