@@ -24,9 +24,8 @@ typedef float                         f32;
 typedef double                        f64;
 typedef long double                  f128;
 
-/* my compiler specific without using libc */
-typedef long long                   isize;
-typedef unsigned long long          usize;
+typedef ssize_t                     isize;
+typedef size_t                      usize;
 
 /* special types */
 typedef u8                          byte;
@@ -83,7 +82,6 @@ typedef enum { false, true } bool;
         snprintf(__buffer, sizeof(__buffer), __format, __VA_ARGS__);        \
         LOG(__buffer)                                                       \
     } while (0)
-
 
 #define ASSERT(_e, ...) if (!(_e)) { fprintf(stderr,  __VA_ARGS__); exit(1); }
 
