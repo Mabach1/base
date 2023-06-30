@@ -47,7 +47,6 @@ String string_from_stdin(Arena *arena) {
             cap *= 2;
             arena_resize(&scratch, input.data, cap * sizeof(char)); 
         }
-
     }
 
     /* getting rid of the new line character and putting instead of him null terminator */
