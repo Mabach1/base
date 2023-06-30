@@ -4,7 +4,7 @@
 #include "defines.h"
 #include "mem.h"
 
-#define STRING_DEFAULT_SIZE (32)
+#define STRING_DEFAULT_SIZE (64)
 
 typedef struct String {
     char *data;
