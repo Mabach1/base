@@ -1,5 +1,8 @@
 *.o
 *.exe
 
+base/*.o
+testing
+
 *.bat
 
