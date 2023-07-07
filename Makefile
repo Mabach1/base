@@ -1,7 +1,7 @@
 CC := gcc
 CFLAG := -g -std=c17 
 
-SRC := $(wildcard testing/*.c) $(wildcard base/*.c)
+SRC := $(wildcard ./*.c) $(wildcard base/*.c)
 OBJ := $(SRC:.c=.o)
 EXECUTABLE := a.exe
 
