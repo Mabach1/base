@@ -29,6 +29,7 @@ void std_print_stream(FILE *stream, const char * __format, ...) {
 
         /* we use '`' this for printing parantesises */
         if ('%' == format.data[index - 1]) { 
+            // TODO: when putting modulo before the curly bracket, it will print the brackets content
             continue;
         }
 
