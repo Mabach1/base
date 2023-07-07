@@ -68,6 +68,10 @@ void string_print(const String str) {
     fwrite(str.data, sizeof(char), str.len, stdout);
 }
 
+void string_print_s(FILE *stream, const String str) {
+    fwrite(str.data, sizeof(char), str.len, stream);
+}
+
 void string_log(const String str) {
      for (usize i = 0; i < str.len; ++i) {
         fprintf(stdout, " '%c' ", str.data[i]);
@@ -601,6 +605,7 @@ StringArr stringarr_from_file(Arena *arena, const char *filename) {
     return result;
 }
 
+#if 0
 void string_print_format(const char *__format__, ...) {
     u64 num_string = string_substr_count(string_str_lit(__format__), string_str_lit("{}")) - 1;
 
@@ -634,7 +639,7 @@ void string_print_format(const char *__format__, ...) {
 
     arena_deinit(&scratch);
 }
-
+#endif
 String stirng_from_format(Arena *arena, const char *__format__, ...) {
     va_list args;
 

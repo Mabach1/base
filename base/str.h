@@ -34,6 +34,7 @@ String string_str_lit(const char *lit);
 const char *string_get_lit(const String str);
 
 void string_print(const String str);
+void string_print_s(FILE *stream, const String str);
 void string_print_format(const char *__format__, ...);
 
 i64 string_stoi(const String str);
