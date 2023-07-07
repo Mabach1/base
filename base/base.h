@@ -5,5 +5,6 @@
 #include "mem.h"
 #include "str.h"
 #include "ran.h"
+#include "std.h"
 
 #endif
