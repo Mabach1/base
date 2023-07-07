@@ -50,8 +50,7 @@ void *arena_alloc(Arena *arena, usize size) {
     u64 offset = align_forward(current_ptr, DEFAULT_ALIGMENT) - (u64)arena->memory;
 
     if (offset + size > arena->max) {
-        fprintf(stderr, "Error: Out of bounds (Exceeded the memory allocated for the given area)!\nAborting...\n");
-        exit(1);
+        ASSERT(0, "Error: Out of bounds!\nExeceded memory allocated for this arena!\n");
     }
 
     /* the actual used memory */
@@ -113,7 +112,7 @@ void *pool_alloc(Pool *pool) {
     PoolFreeNode *node = pool->head;
 
     if (NULL == node) {
-        assert(0 && "Error: Pool Allocator has no free memory!\n");
+        ASSERT(0, "Error: Pool Allocator has no free memory left!\n");
         return NULL;
     }
 
@@ -131,8 +130,7 @@ void pool_free(Pool *pool, void *ptr) {
     }
 
     if (!(start <= ptr && ptr < end)) {
-        assert(0 && "Error: Memory is out of boudns!\n");
-        return;
+        ASSERT(0, "Error: Memory is out of bounds");
     }
 
     PoolFreeNode *node = (PoolFreeNode*)ptr;

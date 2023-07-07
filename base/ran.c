@@ -84,8 +84,7 @@ bool ran_rand_arr(u64 *result, usize size, bool unique) {
 
 bool ran_rand_range_arr(u64 *result, usize size, u64 min, u64 max, bool unique) {
     if ((max - min + 1) < size) {
-        fprintf(stdout, "Error: Unable to generate enough unique numbers in this range");
-        return false;
+        ASSERT(0, "Error: Unable to generate enough unique numbers in this range");
     }
 
     Arena temp_arena;
