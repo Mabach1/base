@@ -75,6 +75,7 @@ typedef enum { false, true } bool;
 #define GigaBytes(x) ((u64) x * 1024 * 1024 * 1024)
 
 #define table_len(table) sizeof (table) / sizeof (*table)
+
 #define LOG(msg) fprintf(stderr, "[%s]:[%llu] [%s]\n", __FILE__, __LINE__, msg);
 #define LOG_VAL(__format, ...)                                              \
     do {                                                                    \
