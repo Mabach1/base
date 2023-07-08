@@ -50,6 +50,8 @@ void std_print_stream(FILE *stream, const char * __format, ...) {
             case 'c':         
                 fprintf(stream, "%c", va_arg(args, i32));
                 break;
+            case 'f':
+                fprintf(stream, "%lf", va_arg(args, f64));
             default:
                 TYPE_ERROR(format.data[index + 1]);
         }
