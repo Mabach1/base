@@ -43,3 +43,8 @@ usize menu(StringArr options) {
 
     return USIZE_MAX;
 }
+
+void menu_pause(void) {
+    std_print_stream(stdout, "\npress any key to continue...");
+    _getch();
+}
