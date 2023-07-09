@@ -1,19 +1,13 @@
 #include "base/base.h"
 
-i32 main(i32 argc, char **argv) {
+i32 main(void) {
     Arena arena;    
 
     arena_init(&arena);
 
-    FILE *file = fopen("text.txt", "w");
+    String person = string_from(&arena, "mami");
 
-    ASSERT(file, "Error: coudnt open!\n");
-
-    String message = string_from(&arena, "Ahoj mami");
-
-    std_print_stream(file, "message: {s}", message);
-
-    fclose(file);
+    std_print_stream(stdout, "ahoj {s}", person);
 
     arena_deinit(&arena);
 
