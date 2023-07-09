@@ -41,6 +41,12 @@ String string_from_stdin(Arena *arena) {
     while (stdin_chr != '\n') {
         stdin_chr = getchar();
         
+        // the trailing new line character in the stdin buffer
+        if (0 == input.len && '\n' == stdin_chr) {
+            stdin_chr = 0;
+            continue;
+        }
+
         input.data[input.len++] = stdin_chr;
 
         if (input.len >= cap) {
