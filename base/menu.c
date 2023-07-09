@@ -1,4 +1,5 @@
 #include "menu.h"
+#include "std.h"
 
 #include <conio.h>
 
@@ -28,6 +29,7 @@ usize menu(StringArr options) {
         }
 
         if (choice) {
+            std_print_stream(stdout, "\n");
             return apos;
         }
         
