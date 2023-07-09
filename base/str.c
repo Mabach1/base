@@ -173,12 +173,8 @@ void stringarr_push_multiple(StringArr *arr, u64 number_of_strings, ...) {
 
     va_start(args, number_of_strings);
 
-    usize old_len = arr->len;
-
-    for (; arr->len < arr->cap && arr->len < number_of_strings + old_len; ++arr->len) {
-        char *arg = va_arg(args, char*); 
-        arr->arr[arr->len].data = strdup(arg);
-        arr->arr[arr->len].len = strlen(arg);
+    for (usize i = arr->len; i < number_of_strings || i < arr->cap; ++i) {
+        stringarr_push(arr, va_arg(args, String));
     }
 
     va_end(args);
