@@ -8,7 +8,7 @@
 usize menu(StringArr options) {
     const usize num_of_options = options.len;
 
-    usize pos = 0; 
+    u32 pos = 0; 
     bool choice = false;
 
     while (RUNNING) {
@@ -18,7 +18,7 @@ usize menu(StringArr options) {
 
         for (usize i = 0; i < num_of_options; ++i) {
             if (i == apos) {
-                std_print_stream(stdout, " > ");
+                std_print_stream(stdout, " {c} ", 16);
             } else {
                 std_print_stream(stdout, "   ");
             }
@@ -47,7 +47,7 @@ usize menu(StringArr options) {
 usize menu_ex(StringArr options, usize last_position) {
     const usize num_of_options = options.len;
 
-    usize pos = last_position; 
+    u32 pos = last_position; 
     bool choice = false;
 
     while (RUNNING) {
@@ -57,7 +57,7 @@ usize menu_ex(StringArr options, usize last_position) {
 
         for (usize i = 0; i < num_of_options; ++i) {
             if (i == apos) {
-                std_print_stream(stdout, " > ");
+                std_print_stream(stdout, " {c} ", 16);
             } else {
                 std_print_stream(stdout, "   ");
             }
