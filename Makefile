@@ -1,5 +1,5 @@
 CC := gcc
-CFLAG := -g -std=c17 
+CFLAG := -g -std=c17 -Wall -Wextra -Werror
 
 SRC := $(wildcard ./*.c) $(wildcard base/*.c)
 OBJ := $(SRC:.c=.o)
