@@ -6,5 +6,6 @@
 #include "str.h"
 #include "ran.h"
 #include "std.h"
+#include "menu.h"
 
 #endif
