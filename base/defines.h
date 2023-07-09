@@ -74,7 +74,7 @@ typedef enum { false, true } bool;
 #define MegaBytes(x) ((u64) x * 1024 * 1024) 
 #define GigaBytes(x) ((u64) x * 1024 * 1024 * 1024)
 
-#define LOG(msg) fprintf(stderr, "[%s]:[%llu] [%s]\n", __FILE__, __LINE__, msg);
+#define LOG(msg) fprintf(stderr, "[%s]:[%d] [%s]\n", __FILE__, __LINE__, msg);
 #define LOG_VAL(__format, ...)                                              \
     do {                                                                    \
         char __buffer[8092];                                                \
@@ -83,5 +83,7 @@ typedef enum { false, true } bool;
     } while (0)
 
 #define ASSERT(_e, ...) if (!(_e)) { fprintf(stderr,  __VA_ARGS__); exit(1); }
+#define TODO(task) LOG(task);
+#define UNIMPLEMENTED(task) ASSERT(0, task);
 
 #endif
