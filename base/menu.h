@@ -5,6 +5,7 @@
 #include "str.h"
 
 usize menu(StringArr options);
+usize menu_ex(StringArr options, usize last_position);
 void menu_pause(void);
 
 #endif
