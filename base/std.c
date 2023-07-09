@@ -29,7 +29,7 @@ void std_print_stream(FILE *stream, const char * __format, ...) {
 
         /* we use '`' this for printing parantesises */
         if ('%' == format.data[index - 1]) { 
-            // TODO: when putting modulo before the curly bracket, it will print the brackets content
+            TODO("printing curly brackets");
             continue;
         }
 
@@ -42,16 +42,17 @@ void std_print_stream(FILE *stream, const char * __format, ...) {
                 string_print_s(stream, va_arg(args, String));
                 break;
             case 'u':
-                fprintf(stream, "%u", va_arg(args, u64));
+                fprintf(stream, "%llu", va_arg(args, u64));
                 break;        
             case 'd':         
-                fprintf(stream, "%d", va_arg(args, i64));
+                fprintf(stream, "%lld", va_arg(args, i64));
                 break;        
             case 'c':         
                 fprintf(stream, "%c", va_arg(args, i32));
                 break;
             case 'f':
                 fprintf(stream, "%lf", va_arg(args, f64));
+                break;
             default:
                 TYPE_ERROR(format.data[index + 1]);
         }
@@ -61,4 +62,3 @@ void std_print_stream(FILE *stream, const char * __format, ...) {
 
     arena_deinit(&scratch);
 }
-
