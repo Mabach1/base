@@ -4,8 +4,10 @@
 #include <conio.h>
 
 #define RUNNING (true)
+#define RIGHT_ARROW (16)
+#define LEFT_ARROW (17)
 
-usize menu(StringArr options) {
+usize menu(String name, StringArr options) {
     const usize num_of_options = options.len;
 
     u32 pos = 0; 
@@ -16,9 +18,11 @@ usize menu(StringArr options) {
 
         system("cls");
 
+        std_print_stream(stdout, "   {s}\n", name);
+
         for (usize i = 0; i < num_of_options; ++i) {
             if (i == apos) {
-                std_print_stream(stdout, " {c} ", 16);
+                std_print_stream(stdout, " {c} ", RIGHT_ARROW);
             } else {
                 std_print_stream(stdout, "   ");
             }
@@ -44,7 +48,7 @@ usize menu(StringArr options) {
     return USIZE_MAX;
 }
 
-usize menu_ex(StringArr options, usize last_position) {
+usize menu_ex(String name, StringArr options, usize last_position) {
     const usize num_of_options = options.len;
 
     u32 pos = last_position; 
@@ -55,9 +59,11 @@ usize menu_ex(StringArr options, usize last_position) {
 
         system("cls");
 
+        std_print_stream(stdout, "{s}\n", name);
+
         for (usize i = 0; i < num_of_options; ++i) {
             if (i == apos) {
-                std_print_stream(stdout, " {c} ", 16);
+                std_print_stream(stdout, " {c} ", RIGHT_ARROW);
             } else {
                 std_print_stream(stdout, "   ");
             }
@@ -67,6 +73,7 @@ usize menu_ex(StringArr options, usize last_position) {
             std_print_stream(stdout, "\n");
         }
 
+        // !here is the return
         if (choice) {
             std_print_stream(stdout, "\n");
             return apos;
@@ -83,7 +90,18 @@ usize menu_ex(StringArr options, usize last_position) {
     return USIZE_MAX;
 }
 
-usize menu_ex_cursor(StringArr options, usize last_position) {
+void turn_off_cursor(void) {
+    fprintf(stdout, "\33[?25l");
+}
+
+void turn_on_cursor(void) {
+    fprintf(stdout, "\33[?25h");
+    fflush(stdout);
+}
+
+usize menu_ex_cursor(String name, StringArr options, usize last_position) {
+    turn_off_cursor();
+
     const usize num_of_options = options.len;
 
     u32 pos = last_position; 
@@ -94,23 +112,28 @@ usize menu_ex_cursor(StringArr options, usize last_position) {
 
         system("cls");
 
+        std_print_stream(stdout, "   {s}\n   ", name);
+
+        for (usize i = 0; i < name.len; ++i) {
+            std_print_stream(stdout, "-");
+        }
+
         for (usize i = 0; i < num_of_options; ++i) {
             if (i == apos) {
-                std_print_stream(stdout, " {c} ", 16);
+                std_print_stream(stdout, "\n {c} ", RIGHT_ARROW);
             } else {
-                std_print_stream(stdout, "   ");
+                std_print_stream(stdout, "\n   ");
             }
 
             std_print_stream(stdout, "{s}", options.arr[i]);
 
             if (i == apos) {
-                std_print_stream(stdout, " {c} ", 17);
+                std_print_stream(stdout, " {c} ", LEFT_ARROW);
             }
-
-            std_print_stream(stdout, "\n");
         }
 
         if (choice) {
+            turn_on_cursor();
             std_print_stream(stdout, "\n");
             return apos;
         }
