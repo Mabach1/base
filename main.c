@@ -101,6 +101,36 @@ i32 main(void) {
         string_from(&arena, "find person (using their id)")
     );
 
+#if 1
+    usize last_choice = 0;
+
+    while (true) {
+        usize choice = menu_ex(options, last_choice);
+
+        switch (choice) {
+            case 0: 
+                std_print_stream(stdout, "Exiting...\n");
+                exit(EXIT_SUCCESS); 
+                break;
+            case 1:
+                list_add(&pool, &head, get_new_person(&arena));
+                break;
+            case 2:
+                list_print(head);
+                break;
+            case 3:
+                TODO("getting an id from the user");
+                break;
+            default:
+                ;
+        }
+
+        last_choice = choice;
+
+        menu_pause();
+    }
+
+#else
     while (true) {
         switch (menu(options)) {
             case 0: 
@@ -121,6 +151,9 @@ i32 main(void) {
         }
         menu_pause();
     }
+
+
+#endif
 
     pool_deinit(&pool);
     arena_deinit(&arena);
