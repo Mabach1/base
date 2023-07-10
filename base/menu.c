@@ -4,8 +4,8 @@
 #include <conio.h>
 
 #define RUNNING (true)
-#define RIGHT_ARROW (16)
-#define LEFT_ARROW (17)
+#define RIGHT_ARROW ('>')
+#define LEFT_ARROW ('<')
 
 usize menu(String name, StringArr options) {
     const usize num_of_options = options.len;
