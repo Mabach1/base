@@ -12,8 +12,8 @@ String string_alloc(Arena *arena, usize size) {
 
     str.len = 0;
 
-    str.data = arena_alloc(arena, size);
-    str.data[size] = '\0';
+    str.ptr = arena_alloc(arena, size);
+    str.ptr[size] = '\0';
 
     return str;
 }
@@ -21,7 +21,7 @@ String string_alloc(Arena *arena, usize size) {
 String string_from(Arena *arena, const char *content) {
     String str = string_alloc(arena, strlen(content));
 
-    memcpy(str.data, content, strlen(content));
+    memcpy(str.ptr, content, strlen(content));
 
     str.len = strlen(content);
 
@@ -47,23 +47,23 @@ String string_from_stdin(Arena *arena) {
             continue;
         }
 
-        input.data[input.len++] = stdin_chr;
+        input.ptr[input.len++] = stdin_chr;
 
         if (input.len >= cap) {
             cap *= 2;
-            arena_resize(&scratch, input.data, cap * sizeof(char)); 
+            arena_resize(&scratch, input.ptr, cap * sizeof(char)); 
         }
     }
 
     /* getting rid of the new line character and putting instead of him null terminator */
-    input.data[input.len -= 1] = '\0';
+    input.ptr[input.len -= 1] = '\0';
 
     /* to avoid internal fragmantation, we put the string into global arena with the necessary size */
-    String result = string_alloc(arena, strlen(input.data));
+    String result = string_alloc(arena, strlen(input.ptr));
 
     result.len = input.len;
 
-    memmove(result.data, input.data, result.len);
+    memmove(result.ptr, input.ptr, result.len);
 
     arena_deinit(&scratch);
 
@@ -71,16 +71,16 @@ String string_from_stdin(Arena *arena) {
 }
 
 void string_print(const String str) {
-    fwrite(str.data, sizeof(char), str.len, stdout);
+    fwrite(str.ptr, sizeof(char), str.len, stdout);
 }
 
 void string_print_s(FILE *stream, const String str) {
-    fwrite(str.data, sizeof(char), str.len, stream);
+    fwrite(str.ptr, sizeof(char), str.len, stream);
 }
 
 void string_log(const String str) {
      for (usize i = 0; i < str.len; ++i) {
-        fprintf(stdout, " '%c' ", str.data[i]);
+        fprintf(stdout, " '%c' ", str.ptr[i]);
     }
 }
 
@@ -115,7 +115,7 @@ StringArr string_parse(Arena *arena, String *str, const char *delimiters) {
     usize current_str_len = 0;
 
     while (offset < str->len) {
-        if (!strchr(delimiters, str->data[offset])) {
+        if (!strchr(delimiters, str->ptr[offset])) {
             current_str_len++;
             offset++;
             continue;
@@ -128,7 +128,7 @@ StringArr string_parse(Arena *arena, String *str, const char *delimiters) {
         }
 
         /* we assign the strings data with the data of given strign and increment it by the offset - current strings length */
-        list.arr[list.len].data = str->data + offset - current_str_len;
+        list.arr[list.len].ptr = str->ptr + offset - current_str_len;
         list.arr[list.len].len = current_str_len;
 
         list.len++;
@@ -146,7 +146,7 @@ StringArr string_parse(Arena *arena, String *str, const char *delimiters) {
 
     /* if the last string isnt delimiter, we also assign it */
     if (current_str_len > 0) {
-        list.arr[list.len].data = str->data + offset - current_str_len;
+        list.arr[list.len].ptr = str->ptr + offset - current_str_len;
         list.arr[list.len].len = current_str_len;
 
         list.len++;   
@@ -203,11 +203,11 @@ bool string_equal(const String str1, const String str2) {
         return false;
     }
 
-    return 0 == memcmp(str1.data, str2.data, str1.len);
+    return 0 == memcmp(str1.ptr, str2.ptr, str1.len);
 }
 
 bool string_equal_n(const String str1, const String str2, usize n) {
-    return 0 == memcmp(str1.data, str2.data, n);
+    return 0 == memcmp(str1.ptr, str2.ptr, n);
 }
 
 i8 string_compare(const String str1, const String str2) {
@@ -221,9 +221,9 @@ i8 string_compare(const String str1, const String str2) {
     usize max = str1.len <= str2.len ? str1.len : str2.len;
 
     while (0 == flag && i < max) {
-        if (str1.data[i] > str2.data[i]) {
+        if (str1.ptr[i] > str2.ptr[i]) {
             flag = 1;
-        } else if (str1.data[i] < str2.data[i]) {
+        } else if (str1.ptr[i] < str2.ptr[i]) {
             flag = -1;
         }
         
@@ -238,12 +238,12 @@ String string_cat(Arena *arena,  String str1, const String str2) {
 
     str.len = str1.len + str2.len + 1;  
 
-    str.data = arena_alloc(arena, str.len);
+    str.ptr = arena_alloc(arena, str.len);
 
-    memcpy(str.data, str1.data, str1.len);
-    memcpy(str.data + str1.len, str2.data, str2.len);
+    memcpy(str.ptr, str1.ptr, str1.len);
+    memcpy(str.ptr + str1.len, str2.ptr, str2.len);
 
-    str.data[str.len] = '\0';
+    str.ptr[str.len] = '\0';
 
     return str;
 }
@@ -256,9 +256,9 @@ String string_dup(Arena *arena, const String source) {
 
     destination = string_alloc(arena, destination.len);
 
-    memcpy(destination.data,source.data, source.len);
+    memcpy(destination.ptr,source.ptr, source.len);
 
-    destination.data[destination.len] = '\0';
+    destination.ptr[destination.len] = '\0';
 
     return destination;
 }
@@ -268,14 +268,14 @@ String string_copy(Arena *arena, const String source, usize destination_size) {
 
     result.len = source.len;
 
-    memcpy(result.data, source.data, source.len); 
+    memcpy(result.ptr, source.ptr, source.len); 
 
     return result;
 }
 
 String string_str_lit(const char *lit) {
     return (String) { 
-        .data = (char *)lit, 
+        .ptr = (char *)lit, 
         .len = strlen((const char *)lit) 
     };
 }
@@ -289,11 +289,11 @@ usize string_find_first(const String haystack, const String needle, u32 offset) 
         return haystack.len + 1;
     }
 
-    const char *search_start = haystack.data + offset;
+    const char *search_start = haystack.ptr + offset;
     usize remaining_length = haystack.len - offset;
 
     for (usize i = 0; i <= remaining_length - needle.len; ++i) {
-        if (memcmp(search_start + i, needle.data, needle.len) == 0) {
+        if (memcmp(search_start + i, needle.ptr, needle.len) == 0) {
             return offset + i;
         }
     }
@@ -318,7 +318,7 @@ usize string_find_last(const String haystack, const String needle, u32 offset) {
     }
 
     for (usize i = search_start; i >= offset; --i) {
-        if (memcmp(haystack.data + i, needle.data, needle.len) == 0) {
+        if (memcmp(haystack.ptr + i, needle.ptr, needle.len) == 0) {
             return i;
         }
     }
@@ -368,11 +368,11 @@ String string_replace_all(Arena *arena, const String to_fix, const String needle
 
         /* Copy the portion before the next occurrence of the needle */
         usize portion_size = next_index - to_fix_index;
-        memcpy(result.data + result_index, to_fix.data + to_fix_index, portion_size);
+        memcpy(result.ptr + result_index, to_fix.ptr + to_fix_index, portion_size);
         result_index += portion_size;
 
         /* Copy the replacement */
-        memcpy(result.data + result_index, replacement.data, replacement.len);
+        memcpy(result.ptr + result_index, replacement.ptr, replacement.len);
         result_index += replacement.len;
 
         /* Update the index in the original string */
@@ -382,7 +382,7 @@ String string_replace_all(Arena *arena, const String to_fix, const String needle
     /* the possible remaining */
     usize remaining_size = to_fix.len - to_fix_index;
 
-    memcpy(result.data + result_index, to_fix.data + to_fix_index, remaining_size);
+    memcpy(result.ptr + result_index, to_fix.ptr + to_fix_index, remaining_size);
     result_index += remaining_size;
 
     result.len = result_index;
@@ -391,7 +391,7 @@ String string_replace_all(Arena *arena, const String to_fix, const String needle
 }
 
 bool string_is_null(const String str) {
-     return (0 == str.len) || ('\0' == str.data[0]) || (NULL == str.data);
+     return (0 == str.len) || ('\0' == str.ptr[0]) || (NULL == str.ptr);
 }
 
 bool stringarr_remove(StringArr *str_arr, usize index) {
@@ -478,7 +478,7 @@ bool string_contains(const String haystack, const String needle) {
 }
 
 const char *string_get_lit(const String str) {
-    char *lit_result = strdup(str.data);
+    char *lit_result = strdup(str.ptr);
 
     lit_result[str.len] = '\0';
 
@@ -491,17 +491,17 @@ i64 string_stoi(const String str) {
 
     usize index = 0;
 
-    while (index < str.len && (str.data[index] == ' ' || str.data[index] == '\t')) {
+    while (index < str.len && (str.ptr[index] == ' ' || str.ptr[index] == '\t')) {
         ++index;
     }
 
-    if (index < str.len && (str.data[index] == '-' || str.data[index] == '+')) {
-        sign = (str.data[index] == '-') ? -1 : 1;
+    if (index < str.len && (str.ptr[index] == '-' || str.ptr[index] == '+')) {
+        sign = (str.ptr[index] == '-') ? -1 : 1;
         ++index;
     }
 
-    while (index < str.len && str.data[index] >= '0' && str.data[index] <= '9') {
-        result = (result * 10) + (str.data[index] - '0');
+    while (index < str.len && str.ptr[index] >= '0' && str.ptr[index] <= '9') {
+        result = (result * 10) + (str.ptr[index] - '0');
         ++index;
     }
 
@@ -545,13 +545,13 @@ usize count_lines(const char *filename) {
 }
 
 void string_trim(String *str) {
-    if (isspace(str->data[0])) {
-        str->data = &str->data[1];
+    if (isspace(str->ptr[0])) {
+        str->ptr = &str->ptr[1];
         str->len--;
     }
 
-    if (isspace(str->data[str->len])) {
-        str->data[str->len--] = '\0';
+    if (isspace(str->ptr[str->len])) {
+        str->ptr[str->len--] = '\0';
     }
 }
 
@@ -589,11 +589,11 @@ StringArr stringarr_from_file(Arena *arena, const char *filename) {
             row.len = 0;
         }
 
-        row.data[row.len++] = chr;
+        row.ptr[row.len++] = chr;
 
         if (row.len >= cap) {
             cap *= 2;
-            arena_resize(&scratch, row.data, cap * sizeof(char)); /* technically speaking, the sizeof(char) is unnecessary but it is there for clarity */
+            arena_resize(&scratch, row.ptr, cap * sizeof(char)); /* technically speaking, the sizeof(char) is unnecessary but it is there for clarity */
         }
     }
 

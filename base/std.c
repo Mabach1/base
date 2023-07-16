@@ -18,8 +18,8 @@ void std_print_stream(FILE *stream, const char * __format, ...) {
     va_start(args, __format); 
 
     for (usize i = 0; i < format.len; ++i) {
-        if (format.data[i] != '{') {
-            fprintf(stream, "%c", format.data[i]);
+        if (format.ptr[i] != '{') {
+            fprintf(stream, "%c", format.ptr[i]);
             continue;
         }
 
@@ -27,17 +27,17 @@ void std_print_stream(FILE *stream, const char * __format, ...) {
 
         i = index + 2;
 
-        /* we use '`' this for printing parantesises */
-        if ('%' == format.data[index - 1]) { 
+        /* we use '%' this for printing parantesises */
+        if ('%' == format.ptr[index - 1]) { 
             TODO("printing curly brackets");
             continue;
         }
 
-        if (format.data[index+2] != '}') {
-            TYPE_ERROR(format.data[index+2]);
+        if (format.ptr[index+2] != '}') {
+            TYPE_ERROR(format.ptr[index+2]);
         }
 
-        switch (format.data[index + 1]) {
+        switch (format.ptr[index + 1]) {
             case 's': 
                 string_print_s(stream, va_arg(args, String));
                 break;
@@ -54,7 +54,7 @@ void std_print_stream(FILE *stream, const char * __format, ...) {
                 fprintf(stream, "%lf", va_arg(args, f64));
                 break;
             default:
-                TYPE_ERROR(format.data[index + 1]);
+                TYPE_ERROR(format.ptr[index + 1]);
         }
     }
 

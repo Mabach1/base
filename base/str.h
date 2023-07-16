@@ -7,7 +7,7 @@
 #define STRING_DEFAULT_SIZE (64)
 
 typedef struct String {
-    char *data;
+    char *ptr;
     usize len;  
 } String;
 
