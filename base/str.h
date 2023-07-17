@@ -17,7 +17,7 @@ typedef struct StringArr {
     usize cap;
 } StringArr;
 
-#define NULL_STR (String) { .data = "", .len = 0 }
+#define NULL_STR (String) { .ptr = "", .len = 0 }
 
 #ifdef STR_DEVELOPING
     String string_alloc(Arena *arena, usize size);
