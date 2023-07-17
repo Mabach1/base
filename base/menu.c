@@ -149,7 +149,7 @@ usize menu_ex_cursor(String name, StringArr options, usize last_position) {
     return USIZE_MAX;
 }
 
-void menu_pause(void) {
-    std_print_stream(stdout, "\npress any key to continue...");
+void menu_pause(String msg) {
+    std_print_stream(stdout, "{s}");
     _getch();
 }
