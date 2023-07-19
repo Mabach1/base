@@ -62,3 +62,13 @@ void std_print_stream(FILE *stream, const char * __format, ...) {
 
     arena_deinit(&scratch);
 }
+
+String std_read_until_delimiter_or_eof(Arena *allocator, String delimiter) {
+    Arena scratch;
+
+    arena_init(&scratch);
+
+
+    arena_deinit(&scratch);
+
+}
