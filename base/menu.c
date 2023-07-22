@@ -150,6 +150,6 @@ usize menu_ex_cursor(String name, StringArr options, usize last_position) {
 }
 
 void menu_pause(String msg) {
-    std_print_stream(stdout, "{s}");
+    std_print_stream(stdout, "{s}", msg);
     _getch();
 }
